@@ -2,5 +2,11 @@
   "scripts": {
     "brick-breaker": "nodemon ./apps/brick-breaker",
     "paint": "nodemon ./apps/paint"
+  },
+  "dependencies": {
+    "midi": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }

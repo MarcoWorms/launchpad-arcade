@@ -92,6 +92,8 @@ const start = ({ inputMidiPort, outputMidiPort, onButtonPress, onButtonRelease, 
       output.sendMessage(makeLaunchpadSystemMessage([20, color, loopAsByte, ...textAsCharCode]))
     },
     colorState: (id) => Object.assign({}, padState[id]),
+    loadPadState: state => Object.keys(state).forEach(id => launchpad.setColor({ id, color: state[id] })),
+    padState: () => padState,
   }
 
   input.on("message", (dTime, message) => {

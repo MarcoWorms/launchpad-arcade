@@ -84,7 +84,7 @@ const onButtonRelease = ({ launchpad, button: { id, x, y }}) => {
 
 const launchpad = start({
   inputMidiPort: 0,
-  outputMidiPort: 0,
+  outputMidiPort: 1, // 0 on mac, 1 on windows, don't know why
   onStart,
   onButtonPress,
   onButtonRelease,
