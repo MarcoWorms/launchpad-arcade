@@ -64,26 +64,32 @@ const start = ({ inputMidiPort, outputMidiPort, onButtonPress, onButtonRelease, 
       padState[getButtonIdByXY({ x, y })] = { r, g, b }
       output.sendMessage(makeLaunchpadSystemMessage([11, getButtonIdByXY({ x, y }), r, g, b]))
     },
+    setColumnColor: ({ x, color }) => {
+      output.sendMessage(makeLaunchpadSystemMessage([12, x, color]))
+    },
+    setRowColor: ({ y, color }) => {
+      output.sendMessage(makeLaunchpadSystemMessage([13, y, color]))
+    },
     setAllColor: (color) => {
       output.sendMessage(makeLaunchpadSystemMessage([14, color]))
     },
     flashColor: ({ id, color }) => {
       output.sendMessage(makeLaunchpadSystemMessage([35, 0, id, color]))
     },
-    flashColorXY: ({ id, color }) => {
+    flashColorXY: ({ x, y, color }) => {
       output.sendMessage(makeLaunchpadSystemMessage([35, 0, getButtonIdByXY({ x, y }), color]))
     },
     pulseColor: ({ id, color }) => {
       output.sendMessage(makeLaunchpadSystemMessage([40, 0, id, color]))
     },
-    pulseColorXY: ({ id, color }) => {
+    pulseColorXY: ({ x, y, color }) => {
       output.sendMessage(makeLaunchpadSystemMessage([40, 0, getButtonIdByXY({ x, y }), color]))
     },
     scrollText: ({ text, color, loop }) => {
       const textAsCharCode = text.split('').map(char => char.charCodeAt(0))
       const loopAsByte = loop ? 1 : 0
 
-      output.sendMessage(makeLaunchpadSystemMessage([20, 0, color, loopAsByte, ...textAsCharCode]))
+      output.sendMessage(makeLaunchpadSystemMessage([20, color, loopAsByte, ...textAsCharCode]))
     },
     colorState: (id) => Object.assign({}, padState[id]),
   }

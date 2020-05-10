@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "paint": "node ./apps/paint",
-    "paint-dev": "nodemon ./apps/paint"
+    "brick-breaker": "nodemon ./apps/brick-breaker",
+    "paint": "nodemon ./apps/paint"
   }
 }
