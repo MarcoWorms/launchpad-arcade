@@ -46,6 +46,12 @@ const start = ({ inputMidiPort, outputMidiPort, onButtonPress, onButtonRelease, 
   output.openPort(outputMidiPort)
 
   const padState = {}
+  buttonsIdLayout.forEach((row, y) => {
+    row.forEach((btnId, x) => {
+      padState[btnId] = 0
+    })
+  })
+
 
   const launchpad = {
     setColor: ({ id, color }) => {
@@ -64,6 +70,9 @@ const start = ({ inputMidiPort, outputMidiPort, onButtonPress, onButtonRelease, 
       padState[getButtonIdByXY({ x, y })] = { r, g, b }
       output.sendMessage(makeLaunchpadSystemMessage([11, getButtonIdByXY({ x, y }), r, g, b]))
     },
+    setRgbColorXYNoSave: ({ x, y, r, g, b }) => {
+      output.sendMessage(makeLaunchpadSystemMessage([11, getButtonIdByXY({ x, y }), r, g, b]))
+    },
     setColumnColor: ({ x, color }) => {
       output.sendMessage(makeLaunchpadSystemMessage([12, x, color]))
     },
@@ -71,6 +80,7 @@ const start = ({ inputMidiPort, outputMidiPort, onButtonPress, onButtonRelease, 
       output.sendMessage(makeLaunchpadSystemMessage([13, y, color]))
     },
     setAllColor: (color) => {
+      Object.keys(padState).forEach(id => { padState[id] = color })
       output.sendMessage(makeLaunchpadSystemMessage([14, color]))
     },
     flashColor: ({ id, color }) => {
@@ -92,8 +102,14 @@ const start = ({ inputMidiPort, outputMidiPort, onButtonPress, onButtonRelease, 
       output.sendMessage(makeLaunchpadSystemMessage([20, color, loopAsByte, ...textAsCharCode]))
     },
     colorState: (id) => Object.assign({}, padState[id]),
-    loadPadState: state => Object.keys(state).forEach(id => launchpad.setColor({ id, color: state[id] })),
-    padState: () => padState,
+    loadPadState: (state) => state && Object.keys(state).forEach(id => {
+      if (typeof state[id] === "number") {
+        launchpad.setColor({ id, color: state[id] })
+      } else {
+        launchpad.setRgbColor({ id, ...state[id] })
+      }
+    }),
+    state: () => padState,
   }
 
   input.on("message", (dTime, message) => {
