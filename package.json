@@ -1,10 +1,13 @@
 {
   "scripts": {
-    "dev-bb": "nodemon ./apps/brick-breaker",
+    "dev-brick-breaker": "nodemon ./apps/brick-breaker",
     "dev-paint": "nodemon ./apps/paint",
+    "dev-animator": "nodemon ./apps/animator",
+    "dev-shooter": "nodemon ./apps/shooter",
     "brick-breaker": "node ./apps/brick-breaker",
     "animator": "node ./apps/animator",
-    "paint": "node ./apps/paint"
+    "paint": "node ./apps/paint",
+    "shooter": "node ./apps/shooter"
   },
   "dependencies": {
     "midi": "^1.0.0"

@@ -17,7 +17,7 @@ let animationTimer = null
 
 let playFrame = 0
 
-let playSpeed = 200
+let playSpeed = 1000/12
 
 
 const onStart = ({ launchpad }) => {
@@ -51,22 +51,22 @@ const onButtonPress = ({ launchpad, button: { id, x, y }}) => {
   if (y === 9) {
 
     if (x === 1) {
-      if (editorState !== 'play') { return }
+      if (editorState === 'play') { return }
       currentFrame = 0
       frames[currentFrame] && launchpad.loadPadState(frames[currentFrame])
     }
     if (x === 2) {
-      if (editorState !== 'play') { return }
+      if (editorState === 'play') { return }
       currentFrame = frames.length - 1
       frames[currentFrame] && launchpad.loadPadState(frames[currentFrame])
     }
     if (x === 3) {
-      if (editorState !== 'play') { return }
+      if (editorState === 'play') { return }
       currentFrame = Math.max(0, currentFrame - 1)
       frames[currentFrame] && launchpad.loadPadState(frames[currentFrame])
     }
     if (x === 4) {
-      if (editorState !== 'play') { return }
+      if (editorState === 'play') { return }
       currentFrame += 1
       frames[currentFrame] && launchpad.loadPadState(frames[currentFrame]) 
     }
@@ -94,7 +94,7 @@ const onButtonPress = ({ launchpad, button: { id, x, y }}) => {
       writeFile(path.join(__dirname, 'animations', Date.now() + '.json'), JSON.stringify(frames), () => { console.log('File saved') })
     }
     if (x === 8) {
-      if (editorState !== 'play') { return }
+      if (editorState === 'play') { return }
       onStart({ launchpad })
       frames[currentFrame] = JSON.parse(JSON.stringify(launchpad.state()))
     }
@@ -102,7 +102,7 @@ const onButtonPress = ({ launchpad, button: { id, x, y }}) => {
   }
 
   if (x !== 9 && y !== 9) {
-    if (editorState !== 'edit') { return }
+    if (editorState === 'play') { return }
     launchpad.setRgbColor({ id, ...currentColor })
     frames[currentFrame] = JSON.parse(JSON.stringify(launchpad.state()))
   }

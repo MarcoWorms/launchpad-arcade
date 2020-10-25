@@ -2,7 +2,7 @@ const { start } = require('../launchpad')
 
 let playerPad = {
   x: 5,
-  color: 3,
+  color: 67,
 }
 
 const drawPlayerPad = ({ launchpad }) => {
@@ -45,7 +45,7 @@ const draw = ({ launchpad }) => {
 }
 
 let gameLoop = null
-let tickTimeout = 50
+let tickTimeout = 200
 
 const randomizeObjectivePosition = () => {
   objective.x = 1 + Math.floor(Math.random() * 8)
@@ -53,8 +53,8 @@ const randomizeObjectivePosition = () => {
 }
 
 const speedUp = () => {
-  if (tickTimeout === 50) { return }
-  tickTimeout -= 20
+  if (tickTimeout <= 50) { return }
+  tickTimeout -= 10
 }
 
 const onStart = ({ launchpad }) => {
